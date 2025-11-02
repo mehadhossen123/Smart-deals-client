@@ -3,15 +3,39 @@ import { AuthContext } from '../AuthContext/AuthContext';
 
 const Register = () => {
 
-const { signInGoogle}=use(AuthContext)
+const { signInGoogle, userSignOut } = use(AuthContext);
 const handleGoogleLogin=(e)=>{
     e.preventDefault()
     signInGoogle().then(result=>{
-        console.log(result);
+        console.log(result.user);
+        const newUser={
+            name:result.user.displayName,
+            email:result.user.email,
+            photo:result.user.photoURL
+        }
+
+
+     fetch("http://localhost:3000/user", {
+        method:"POST",
+        headers:{
+            'content-type':"application/json"
+        },
+        body:JSON.stringify(newUser)
+
+     })
+       .then((res) => res.json())
+       .then((result) => {
+         console.log("after saved data ", result);
+       });
+
+
+
         
     }).catch(error=>{
         console.log(error)
     })
+
+
 }
 
 

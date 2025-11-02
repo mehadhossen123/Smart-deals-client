@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 
 import { auth } from '../firebase/firebase.init';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 
 const googleProvider=new GoogleAuthProvider();
 
@@ -35,7 +35,10 @@ const AuthProvider = ({children}) => {
        return () => unsubscribe(); // cleanup on unmount
      }, []);
 
-
+ // user signout 
+ const userSignOut=()=>{
+    return signOut(auth)
+ }
 
 //user information is here 
     const userInfo={
@@ -46,6 +49,7 @@ const AuthProvider = ({children}) => {
         user,
         signInUser,
         signInGoogle,
+        userSignOut,
 
 
     }
