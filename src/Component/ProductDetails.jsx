@@ -2,6 +2,7 @@ import React, { use, useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { AuthContext } from '../AuthContext/AuthContext';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const ProductDetails = () => {
     const {_id:productId}=useLoaderData()
@@ -56,11 +57,43 @@ const ProductDetails = () => {
        
 
     }
+
+
+
+
+
     useEffect(()=>{
-        fetch(`http://localhost:3000/bids/products/${productId}`).then(res=>res.json()).then(data=>{
-            setBids(data)
-        })
-    },[productId])
+      axios.get(`http://localhost:3000/bids/products/${productId}` ,{
+       
+      })
+       
+      
+      .then(res=>{
+
+        console.log(res)
+        setBids(res.data);
+      })
+    
+    },[productId,user])
+
+
+
+
+    // useEffect(()=>{
+    //   if(!user) return
+    //     fetch(`http://localhost:3000/bids/products/${productId}`, {
+    //       headers: {
+    //         authorization: `Bearer ${user.accessToken}`,
+    //       },
+    //     })
+    //       .then((res) => res.json())
+    //       .then((data) => {
+    //         setBids(data);
+    //       });
+    // },[productId,user])
+
+
+
     
     return (
       <div>
